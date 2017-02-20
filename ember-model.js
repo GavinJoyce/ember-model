@@ -1,6 +1,6 @@
 (function() {
 
-var VERSION = '0.0.17';
+var VERSION = '0.0.18';
 
 if (Ember.libraries) {
   Ember.libraries.register('Ember Model', VERSION);
@@ -249,7 +249,7 @@ Ember.FilteredRecordArray = Ember.RecordArray.extend({
 
   updateFilterForRecord: function(record) {
     var results = get(this, 'content');
-    if (this.filterFunction(record) && !results.contains(record)) {
+    if (this.filterFunction(record) && !results.includes(record)) {
       results.pushObject(record);
     }
   },
@@ -270,6 +270,7 @@ Ember.FilteredRecordArray = Ember.RecordArray.extend({
     }
   }
 });
+
 
 })();
 
@@ -303,7 +304,7 @@ Ember.ManyArray = Ember.RecordArray.extend({
     var isDirty = false;
 
     for (var i = 0, l = contentLength; i < l; i++) {
-      if (!originalContent.contains(content[i])) {
+      if (!originalContent.includes(content[i])) {
         isDirty = true;
         break;
       }
@@ -2115,9 +2116,9 @@ Ember.onLoad('Ember.Application', function(Application) {
 
     initialize: function() {
       var application = arguments[1] || arguments[0];
-      var emstore = application.Store || Ember.Model.Store;
-      application.register('emstore:application', emstore);
-      application.register('emstore:main', emstore);
+      var store = application.Store || Ember.Model.Store;
+      application.register('emstore:application', store);
+      application.register('emstore:main', store);
 
       application.inject('route', 'emstore', 'emstore:main');
       application.inject('controller', 'emstore', 'emstore:main');
